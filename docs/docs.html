@@ -76,3 +76,18 @@
         </section>
       </dl>
     </section>
+    <section class="suite">
+      <h1>value</h1>
+      <dl>
+        <dt>should be immutable</dt>
+        <dd><pre><code>var value = Value({
+        property: 'value'
+      });
+
+      value.should.have.property('property', 'value');
+
+      value.property = 'new value';
+
+      value.should.have.property('property', 'value');</code></pre></dd>
+      </dl>
+    </section>

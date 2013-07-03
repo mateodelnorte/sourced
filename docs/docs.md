@@ -4,6 +4,7 @@
      - [#merge](#entity-merge)
      - [#replay](#entity-replay)
      - [#snapshot](#entity-snapshot)
+   - [value](#value)
 <a name=""></a>
  
 <a name="entity"></a>
@@ -83,5 +84,21 @@ var param = {
       snapshot.property2.should.equal(data.data);
       snapshot.snapshotVersion.should.equal(1);
       snapshot.version.should.equal(1);
+```
+
+<a name="value"></a>
+# value
+should be immutable.
+
+```js
+var value = Value({
+        property: 'value'
+      });
+
+      value.should.have.property('property', 'value');
+
+      value.property = 'new value';
+
+      value.should.have.property('property', 'value');
 ```
 
