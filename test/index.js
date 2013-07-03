@@ -72,7 +72,7 @@ describe('entity', function () {
     });
   });
   describe('#snapshot', function () {
-    it('should return frozen object with current state of the entity', function () {
+    it('should return object with current state of the entity', function () {
 
       var param = {
         data: 'data'
