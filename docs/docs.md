@@ -1,6 +1,6 @@
 # TOC
    - [entity](#entity)
-     - [#apply](#entity-apply)
+     - [#digest](#entity-digest)
      - [#merge](#entity-merge)
      - [#replay](#entity-replay)
      - [#snapshot](#entity-snapshot)
@@ -9,8 +9,8 @@
  
 <a name="entity"></a>
 # entity
-<a name="entity-apply"></a>
-## #apply
+<a name="entity-digest"></a>
+## #digest
 should wrap param object with method matching calling method name and add to array of newEvents.
 
 ```js
@@ -70,7 +70,8 @@ var events = [
 should return object with current state of the entity.
 
 ```js
-var param = {
+;
+      var param = {
         data: 'data'
       };
 
