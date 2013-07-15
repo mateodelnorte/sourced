@@ -14,20 +14,20 @@ util.inherits(User, Entity);
 
 User.prototype.grant = function (param) {
   this.apps[param.appId] = param;
-  this.apply('grant', param);
+  this.digest('grant', param);
   this.emit('granted', param, this);
 };
 
 User.prototype.provision = function (param) {
   this.username = param.username;
   this.password = param.password || param.pass;
-  this.apply('provision', param);
+  this.digest('provision', param);
   this.emit('provisioned', this);
 };
 
 User.prototype.revoke = function (param) {
   delete this.apps[param.appId];
-  this.apply('revoke', param);
+  this.digest('revoke', param);
   this.emit('revoked', param, this);
 };
 

@@ -14,11 +14,11 @@ util.inherits(TestEntity, Entity);
 
 TestEntity.prototype.method = function (param) {
   this.property2 = param.data;
-  this.apply('method', param);
+  this.digest('method', param);
 };
 
 describe('entity', function () {
-  describe('#apply', function () {
+  describe('#digest', function () {
     it('should wrap param object with method matching calling method name and add to array of newEvents', function () {
 
       var param = {
