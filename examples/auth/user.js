@@ -7,13 +7,13 @@ function User () {
   this.username = '';
   this.password = this.pass = '';
 
-  Entity.call(this);
+  Entity.apply(this, arguments);
 }
 
 util.inherits(User, Entity);
 
 User.prototype.grant = function (param) {
-  this.apps[param.appId] = param.appId;
+  this.apps[param.appId] = param;
   this.apply('grant', param);
   this.emit('granted', param, this);
 };
