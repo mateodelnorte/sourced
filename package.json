@@ -1,12 +1,13 @@
 {
   "name": "sourced",
   "version": "0.0.0",
-  "description": "",
+  "description": "Tiny framework for building models with the event sourcing
+  pattern (events and snapshots).",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "mattwalters5@gmail.com",
   "license": "BSD",
   "devDependencies": {
     "mocha": "~1.11.0",
