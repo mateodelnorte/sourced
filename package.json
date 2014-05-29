@@ -1,12 +1,14 @@
 {
   "name": "sourced",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Tiny framework for building models with the event sourcing  pattern (events and snapshots).",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "mattwalters5@gmail.com",
+  "author": {
+    "name": "mattwalters5@gmail.com"
+  },
   "license": "BSD",
   "devDependencies": {
     "mocha": "~1.11.0",
@@ -15,5 +17,11 @@
   "dependencies": {
     "debug": "~0.7.2",
     "lodash": "^2.4.1"
-  }
+  },
+  "readme": "sourced\n=======\n\nTiny framework for building models with the event sourcing pattern (events and snapshots). \n\nOverview to come. Until then, view the [docs](./docs/docs.md).\n",
+  "readmeFilename": "README.md",
+  "_id": "sourced@0.0.2",
+  "_shasum": "9655b1bc744ddb74497f1d38a8ca0c1d08374687",
+  "_from": "sourced@0.0.2",
+  "_resolved": "https://registry.npmjs.org/sourced/-/sourced-0.0.2.tgz"
 }
