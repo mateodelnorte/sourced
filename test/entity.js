@@ -15,6 +15,7 @@ util.inherits(TestEntity, Entity);
 TestEntity.prototype.method = function (param) {
   this.property2 = param.data;
   this.digest('method', param);
+  this.emit('method-ed');
 };
 
 describe('entity', function () {
@@ -68,6 +69,22 @@ describe('entity', function () {
       (function () {
         test.replay(events);
       }).should.throw('method \'someMethod\' does not exist on model \'TestEntity\'');
+
+    });
+    it('should not emit events when replaying', function () {
+
+      var events = [
+        {
+          method: 'someMethod',
+          data: { some: 'param' }
+        }
+      ];
+
+      var test = new TestEntity();
+
+      test.on('method-ed', function () {
+        throw new Error('should not emit when replaying');
+      });
 
     });
   });
