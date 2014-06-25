@@ -37,6 +37,21 @@ describe('entity', function () {
 
     });
   });
+  describe('#enqueue', function () {
+    it('should enqueue EventEmitter style events by adding them to array of events to emit', function () {
+
+      var test = new TestEntity();
+
+      test.enqueue('something.happened', { data: 'data' }, { data2: 'data2' });
+
+      test.should.have.property('eventsToEmit');
+
+      (Array.prototype.slice.call(test.eventsToEmit[0], 0, 1)[0]).should.eql('something.happened');
+      (Array.prototype.slice.call(test.eventsToEmit[0], 1))[0].should.have.property('data', 'data');
+      (Array.prototype.slice.call(test.eventsToEmit[0], 1))[1].should.have.property('data2', 'data2');
+
+    });
+  });
   describe('#merge', function () {
     it('should marge a snapshot into the current object, overwriting any common properties', function () {
 
@@ -69,22 +84,6 @@ describe('entity', function () {
       (function () {
         test.replay(events);
       }).should.throw('method \'someMethod\' does not exist on model \'TestEntity\'');
-
-    });
-    it('should not emit events when replaying', function () {
-
-      var events = [
-        {
-          method: 'someMethod',
-          data: { some: 'param' }
-        }
-      ];
-
-      var test = new TestEntity();
-
-      test.on('method-ed', function () {
-        throw new Error('should not emit when replaying');
-      });
 
     });
   });
