@@ -86,6 +86,24 @@ describe('entity', function () {
       }).should.throw('method \'someMethod\' does not exist on model \'TestEntity\'');
 
     });
+    it('should not emit events during replay', function () {
+
+      var events = [
+        {
+          method: 'method',
+          data: { some: 'param' }
+        }
+      ];
+
+      var test = new TestEntity();
+
+      test.on('method-ed', function () {
+        throw new Error('should not emit during replay');
+      });
+
+      test.replay(events);
+
+    });
   });
   describe('#snapshot', function () {
     it('should return object with current state of the entity', function () {
