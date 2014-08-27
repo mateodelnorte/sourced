@@ -1,6 +1,6 @@
 {
   "name": "sourced",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Tiny framework for building models with the event sourcing  pattern (events and snapshots).",
   "main": "index.js",
   "scripts": {
@@ -8,6 +8,10 @@
   },
   "author": {
     "name": "mattwalters5@gmail.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:mateodelnorte/sourced.git"
   },
   "license": "BSD",
   "devDependencies": {
