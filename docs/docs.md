@@ -6,7 +6,7 @@
      - [#snapshot](#entity-snapshot)
    - [value](#value)
 <a name=""></a>
- 
+
 <a name="entity"></a>
 # entity
 <a name="entity-digest"></a>
@@ -30,7 +30,7 @@ var param = {
 
 <a name="entity-merge"></a>
 ## #merge
-should marge a snapshot into the current object, overwriting any common properties.
+should merge a snapshot into the current object, overwriting any common properties.
 
 ```js
 var snapshot = {
@@ -102,4 +102,3 @@ var value = Value({
 
       value.should.have.property('property', 'value');
 ```
-
