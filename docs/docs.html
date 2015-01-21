@@ -20,6 +20,21 @@
           </dl>
         </section>
         <section class="suite">
+          <h1>#enqueue</h1>
+          <dl>
+            <dt>should enqueue EventEmitter style events by adding them to array of events to emit</dt>
+            <dd><pre><code>var test = new TestEntity();
+
+      test.enqueue('something.happened', { data: 'data' }, { data2: 'data2' });
+
+      test.should.have.property('eventsToEmit');
+
+      (Array.prototype.slice.call(test.eventsToEmit[0], 0, 1)[0]).should.eql('something.happened');
+      (Array.prototype.slice.call(test.eventsToEmit[0], 1))[0].should.have.property('data', 'data');
+      (Array.prototype.slice.call(test.eventsToEmit[0], 1))[1].should.have.property('data2', 'data2');</code></pre></dd>
+          </dl>
+        </section>
+        <section class="suite">
           <h1>#merge</h1>
           <dl>
             <dt>should marge a snapshot into the current object, overwriting any common properties</dt>
@@ -52,6 +67,21 @@
       (function () {
         test.replay(events);
       }).should.throw('method \'someMethod\' does not exist on model \'TestEntity\'');</code></pre></dd>
+            <dt>should not emit events during replay</dt>
+            <dd><pre><code>var events = [
+        {
+          method: 'method',
+          data: { some: 'param' }
+        }
+      ];
+
+      var test = new TestEntity();
+
+      test.on('method-ed', function () {
+        throw new Error('should not emit during replay');
+      });
+
+      test.replay(events);</code></pre></dd>
           </dl>
         </section>
         <section class="suite">
