@@ -107,7 +107,7 @@ describe('entity', function () {
   });
   describe('#snapshot', function () {
     it('should return object with current state of the entity', function () {
-;
+
       var param = {
         data: 'data'
       };
