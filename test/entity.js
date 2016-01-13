@@ -125,7 +125,8 @@ describe('entity', function () {
 
       test.replay(events);
 
-      console.log(test)
+      test.param1.should.have.property('one', 1);
+      test.param2.should.have.property('two', 2);
 
     });
   });
