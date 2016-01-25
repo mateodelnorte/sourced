@@ -7,6 +7,10 @@ var Entity = require('../lib/entity');
 
 function TestEntity () {
   this.property = false;
+  this.property2 = {
+    subProperty: false,
+    subProperty2: true
+  }
   Entity.call(this);
 }
 
@@ -36,6 +40,27 @@ describe('entity', function () {
       test.newEvents[0].data.should.equal(data);
 
     });
+    it('should have versions 1 and 2 for two consecutively digested events', function () {
+
+      var param = {
+          data: 'data'
+        };
+
+      var test = new TestEntity(),
+          data = { test: 'data' },
+          data2 = { test: 'data2'};
+
+      test.method(data);
+      test.method(data2);
+
+      test.newEvents.length.should.equal(2);
+      test.newEvents[0].method.should.equal('method');
+      test.newEvents[0].data.should.equal(data);
+      test.newEvents[1].method.should.equal('method');
+      test.newEvents[1].data.should.equal(data2);
+      test.version.should.eql(2);
+
+    });
   });
   describe('#enqueue', function () {
     it('should enqueue EventEmitter style events by adding them to array of events to emit', function () {
@@ -53,7 +78,7 @@ describe('entity', function () {
     });
   });
   describe('#merge', function () {
-    it('should marge a snapshot into the current object, overwriting any common properties', function () {
+    it('should merge a snapshot into the current snapshot, overwriting any common properties', function () {
 
       var snapshot = {
           property: true,
@@ -66,6 +91,40 @@ describe('entity', function () {
 
       test.property.should.equal(true);
       test.property2.should.equal(true);
+
+    });
+    it('should merge a complex snapshot (missing newly added fields) while maintaining defaulted sub-object values', function () {
+
+      var snapshot = {
+          property: true,
+        };
+
+      var test = new TestEntity();
+
+      test.merge(snapshot);
+
+      test.property.should.equal(true);
+      test.property2.should.have.property('subProperty', false);
+      test.property2.should.have.property('subProperty2', true);
+
+    });
+    it('should merge a complex snapshot while maintaining defaulted sub-object values', function () {
+
+      var snapshot = {
+          property: true,
+          property2: {
+            subProperty: true,
+            subProperty2: false
+          }
+        };
+
+      var test = new TestEntity();
+
+      test.merge(snapshot);
+
+      test.property.should.equal(true);
+      test.property2.should.have.property('subProperty', true);
+      test.property2.should.have.property('subProperty2', false);
 
     });
   });
