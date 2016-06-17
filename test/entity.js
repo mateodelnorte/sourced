@@ -22,6 +22,11 @@ TestEntity.prototype.method = function (param) {
   this.emit('method-ed');
 };
 
+Entity.digestMethod(TestEntity, function method2 (param1, param2) {
+  this.param1 = param1;
+  this.param2 = param2;
+});
+
 describe('entity', function () {
   describe('#digest', function () {
     it('should wrap param object with method matching calling method name and add to array of newEvents', function () {
@@ -38,6 +43,7 @@ describe('entity', function () {
       test.newEvents.length.should.equal(1);
       test.newEvents[0].method.should.equal('method');
       test.newEvents[0].data.should.equal(data);
+      test.version.should.eql(1);
 
     });
     it('should have versions 1 and 2 for two consecutively digested events', function () {
@@ -163,6 +169,25 @@ describe('entity', function () {
       test.replay(events);
 
     });
+    it('should correctly replay methods with multiple paramers', function () {
+
+      var events = [
+        {
+          method: 'method2',
+          data: [ { one: 1 }, { two: 2 } ],
+          timestamp: 1452706711253,
+          version: 1
+        }
+      ];
+
+      var test = new TestEntity();
+
+      test.replay(events);
+
+      test.param1.should.have.property('one', 1);
+      test.param2.should.have.property('two', 2);
+
+    });
   });
   describe('#snapshot', function () {
     it('should return object with current state of the entity', function () {
@@ -184,4 +209,36 @@ describe('entity', function () {
 
     });
   });
+
+  describe('#digestMethod', function () {
+
+    it('should create an entity prototype method that functions the same as a naked function definition', function () {
+
+      function DigestEntity () {
+        this.property = false;
+        Entity.call(this);
+      }
+
+      util.inherits(DigestEntity, Entity);
+
+      Entity.digestMethod(DigestEntity, function method (param) {
+        this.property2 = param.data;
+        this.emit('method-ed');
+      });
+
+      var test = new DigestEntity();
+
+      var data = { 'test': 'data' };
+
+      test.method(data);
+
+      test.newEvents.length.should.equal(1);
+      test.newEvents[0].method.should.equal('method');
+      test.newEvents[0].data.should.equal(data);
+      test.version.should.eql(1);
+
+    });
+
+  });
+
 });
