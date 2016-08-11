@@ -29,6 +29,28 @@ var param = {
       test.newEvents[0].data.should.equal(data);
 ```
 
+should have versions 1 and 2 for two consecutively digested events.
+
+```js
+var param = {
+          data: 'data'
+        };
+
+      var test = new TestEntity(),
+          data = { test: 'data' },
+          data2 = { test: 'data2'};
+
+      test.method(data);
+      test.method(data2);
+
+      test.newEvents.length.should.equal(2);
+      test.newEvents[0].method.should.equal('method');
+      test.newEvents[0].data.should.equal(data);
+      test.newEvents[1].method.should.equal('method');
+      test.newEvents[1].data.should.equal(data2);
+      test.version.should.eql(2);
+```
+
 <a name="entity-enqueue"></a>
 ## #enqueue
 should enqueue EventEmitter style events by adding them to array of events to emit.
@@ -47,7 +69,7 @@ var test = new TestEntity();
 
 <a name="entity-merge"></a>
 ## #merge
-should marge a snapshot into the current object, overwriting any common properties.
+should merge a snapshot into the current snapshot, overwriting any common properties.
 
 ```js
 var snapshot = {
@@ -61,6 +83,42 @@ var snapshot = {
 
       test.property.should.equal(true);
       test.property2.should.equal(true);
+```
+
+should merge a complex snapshot (missing newly added fields) while maintaining defaulted sub-object values.
+
+```js
+var snapshot = {
+          property: true,
+        };
+
+      var test = new TestEntity();
+
+      test.merge(snapshot);
+
+      test.property.should.equal(true);
+      test.property2.should.have.property('subProperty', false);
+      test.property2.should.have.property('subProperty2', true);
+```
+
+should merge a complex snapshot while maintaining defaulted sub-object values.
+
+```js
+var snapshot = {
+          property: true,
+          property2: {
+            subProperty: true,
+            subProperty2: false
+          }
+        };
+
+      var test = new TestEntity();
+
+      test.merge(snapshot);
+
+      test.property.should.equal(true);
+      test.property2.should.have.property('subProperty', true);
+      test.property2.should.have.property('subProperty2', false);
 ```
 
 <a name="entity-replay"></a>
@@ -106,8 +164,7 @@ var events = [
 should return object with current state of the entity.
 
 ```js
-;
-      var param = {
+var param = {
         data: 'data'
       };
 
