@@ -7,8 +7,13 @@ changes (events) to the entity, rather than just its current state. The current 
 latest snapshot plus subsequent events, and replaying them against the entity. 
 
 One large benefit of event sourcing: your data *_is_* your audit trail. Zero discrepancies. 
- 
+
 For example usage, see the [examples](./examples) and [tests](./test). 
+
+Sourced makes no assumptions about how you _store_ your events and snapshots. The library is small and tight with only the required functionality to define entities and their logic, enqueue and emit events, and track event state to later be persisted. To actually persist, use one of the following libraries or implement your own: 
+
+- [sourced-repo-mongo](https://github.com/mateodelnorte/sourced-repo-mongo)
+- ~~[sourced-repo-couchdb](https://github.com/dermidgen/sourced-repo-couchdb)~~ (partially implemented)
 
 # Reference
 
