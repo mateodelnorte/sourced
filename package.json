@@ -13,7 +13,7 @@
     "type": "git",
     "url": "git@github.com:mateodelnorte/sourced.git"
   },
-  "license": "BSD",
+  "license": "MIT",
   "devDependencies": {
     "mocha": "~1.11.0",
     "should": "~1.2.2"
