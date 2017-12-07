@@ -16,6 +16,14 @@ function TestEntity () {
 
 util.inherits(TestEntity, Entity);
 
+function TestNullPropertyEntity () {
+  this.property = null;
+  this.arrayProperty = [];
+  Entity.call(this);
+}
+
+util.inherits(TestNullPropertyEntity, Entity);
+
 TestEntity.prototype.method = function (param) {
   this.property2 = param.data;
   this.digest('method', param);
@@ -108,6 +116,38 @@ describe('entity', function () {
       test.property2.should.have.property('subProperty2', true);
 
     });
+
+    it('should merge a complex snapshot when entity is initialized with null properties', function () {
+
+      var snapshot = {
+        property: { subProperty: true },
+      };
+
+      var test = new TestNullPropertyEntity();
+
+      test.merge(snapshot);
+
+      test.should.have.property('property');
+      test.property.should.have.property('subProperty', true);
+
+    });
+
+    it('should merge a compley snapshot when entity is initialized with empty array properties', function () {
+
+      var snapshot = {
+        arrayProperty : ['123']
+      };
+
+      var test = new TestNullPropertyEntity();
+
+      test.merge(snapshot);
+
+      test.should.have.property('arrayProperty');
+      test.arrayProperty[0].should.equal('123');
+
+    });
+
+
     it('should merge a complex snapshot while maintaining defaulted sub-object values', function () {
 
       var snapshot = {
