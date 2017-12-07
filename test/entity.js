@@ -132,7 +132,7 @@ describe('entity', function () {
 
     });
 
-    it('should merge a compley snapshot when entity is initialized with empty array properties', function () {
+    it('should merge a complex snapshot when entity is initialized with empty array properties', function () {
 
       var snapshot = {
         arrayProperty : ['123']
