@@ -1,21 +1,19 @@
-import util from 'util'
 import Entity from '../src/entity'
 
-function TestEntity () {
-  this.property = false
-  this.property2 = {
-    subProperty: false,
-    subProperty2: true
+class TestEntity extends Entity {
+  constructor () {
+    super()
+    this.property = false
+    this.property2 = {
+      subProperty: false,
+      subProperty2: true
+    }
   }
-  Entity.call(this)
-}
-
-util.inherits(TestEntity, Entity)
-
-TestEntity.prototype.method = function (param) {
-  this.property2 = param.data
-  this.digest('method', param)
-  this.emit('method-ed')
+  method (param) {
+    this.property2 = param.data
+    this.digest('method', param)
+    this.emit('method-ed')
+  }
 }
 
 describe('entity', function () {
