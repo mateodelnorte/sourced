@@ -1,10 +1,16 @@
 {
   "name": "sourced",
-  "version": "0.1.4",
+  "version": "1.0.0",
   "description": "Tiny framework for building models with the event sourcing  pattern (events and snapshots).",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
-    "test": "mocha -R spec"
+    "build": "babel src -d dist",
+    "lint": "eslint src __tests__",
+    "lint:fix": "eslint --fix src __tests__",
+    "test": "jest --config jest.json --coverage --verbose",
+    "test:watch": "jest --config jest.json --watch --coverage --verbose",
+    "precommit": "npm run lint:fix && npm run test",
+    "prepublish": "npm run build"
   },
   "author": {
     "name": "mattwalters5@gmail.com"
@@ -15,11 +21,26 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "mocha": "~1.11.0",
-    "should": "~1.2.2"
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.2.3",
+    "babel-jest": "^22.4.3",
+    "babel-plugin-module-resolver": "^3.1.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "eslint": "^4.19.1",
+    "eslint-config-standard": "^11.0.0",
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "jest": "^22.4.3",
+    "regenerator-runtime": "^0.11.1"
   },
   "dependencies": {
-    "debug": "~0.7.2",
-    "lodash": "^2.4.1"
+    "debug": "^3.1.0",
+    "lodash": "^4.17.5",
+    "lodash.clonedeep": "^4.5.0",
+    "lodash.merge": "^4.6.1"
   }
 }

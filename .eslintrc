@@ -1,0 +1,41 @@
+{
+  "env": {
+    "node": true,
+    "es6": true
+  },
+  "extends": "standard",
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "experimentalObjectRestSpread": true,
+      "jsx": true
+    },
+    "sourceType": "module"
+  },
+  "plugins": [],
+  "globals": {
+    "gql": true,
+    "ga": true,
+    "describe": true,
+    "it": true,
+    "test": true,
+    "expect": true,
+    "jest": true,
+    "beforeEach": true,
+    "afterEach": true,
+    "jasmine": true,
+    "beforeAll": true,
+    "afterAll": true
+  },
+  "rules": {
+    "indent": [
+      "error",
+      2
+    ],
+    "linebreak-style": [
+      "error",
+      "unix"
+    ],
+    "space-before-function-paren": 0
+  }
+}

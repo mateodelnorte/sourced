@@ -1,9 +1,12 @@
 /* jslint node: true */
 
-var events = require('events');
-var log = require('debug')('sourced');
-var util = require('util');
-var _ = require('lodash');
+import cloneDeep from 'lodash.clonedeep'
+import events from 'events'
+import debug from 'debug'
+import merge from 'lodash.merge'
+import util from 'util'
+
+const log = debug('sourced')
 
 /**
  * Extending native Error.
@@ -13,13 +16,13 @@ var _ = require('lodash');
  * @param {Object} [constr=this] The constructor or instance.
  */
 function EntityError (msg, constr) {
-  Error.captureStackTrace(this, constr || this);
-  this.message = msg || 'Entity Error';
+  Error.captureStackTrace(this, constr || this)
+  this.message = msg || 'Entity Error'
 }
 
-util.inherits(EntityError, Error);
+util.inherits(EntityError, Error)
 
-EntityError.prototype.name = 'EntityError';
+EntityError.prototype.name = 'EntityError'
 
 /**
  * Creates an event-sourced Entity.
@@ -33,15 +36,14 @@ EntityError.prototype.name = 'EntityError';
  * @requires lodash
  * @license MIT
  */
-function Entity (/*snapshot, evnts*/) {
-
+function Entity (/* snapshot, evnts */) {
   /**
    * [Description]
    *
    * @member {Array} eventsToEmit
    * @todo discuss the use of this so it can be documented better.
    */
-  this.eventsToEmit = [];
+  this.eventsToEmit = []
 
   /**
    * [Description]
@@ -49,47 +51,47 @@ function Entity (/*snapshot, evnts*/) {
    * @member {Array} newEvents
    * @todo discuss the use of this so it can be documented better.
    */
-  this.newEvents = [];
+  this.newEvents = []
 
   /**
    * Boolean to prevent emit, enqueue and digest from running during replay.
    *
    * @member {Boolean} replaying
    */
-  this.replaying = false;
+  this.replaying = false
 
   /**
    * Holds the version of the latest snapshot for the entity.
    *
    * @member {Number} snapshotVersion
    */
-  this.snapshotVersion = 0;
+  this.snapshotVersion = 0
 
   /**
    * Holds the event's timestamp in the entity.
    *
    * @member {Number} timestamp
    */
-  this.timestamp = Date.now();
+  this.timestamp = Date.now()
 
   /**
    * Holds the current version of the entity.
    *
    * @member {Number} version
    */
-  this.version = 0;
+  this.version = 0
 
-  events.EventEmitter.call(this);
-  var args = Array.prototype.slice.call(arguments);
+  events.EventEmitter.call(this)
+  var args = Array.prototype.slice.call(arguments)
 
   /**
    * If one argument is passed, asume it's a snapshot and merge it.
    *
    * @todo This should probably be changed. What if it's not a snapshot/object?
    */
-  if (args[0]){
-    var snapshot = args[0];
-    this.merge(snapshot);
+  if (args[0]) {
+    var snapshot = args[0]
+    this.merge(snapshot)
   }
 
   /**
@@ -98,33 +100,33 @@ function Entity (/*snapshot, evnts*/) {
    *
    * @todo This should probably be changed. What if it's not an array?
    */
-  if (args[1]){
-    var evnts = args[1];
-    this.replay(evnts);
+  if (args[1]) {
+    var evnts = args[1]
+    this.replay(evnts)
   }
 }
 
-util.inherits(Entity, events.EventEmitter);
+util.inherits(Entity, events.EventEmitter)
 
 /**
  * Wrapper around the EventEmitter.emit method that adds a condition so events
  * are not fired during replay.
  */
 Entity.prototype.emit = function emit () {
-  if ( ! this.replaying) {
-    events.EventEmitter.prototype.emit.apply(this, arguments);
+  if (!this.replaying) {
+    events.EventEmitter.prototype.emit.apply(this, arguments)
   }
-};
+}
 
 /**
  * Add events to the queue of events to emit. If called during replay, this
  * method does nothing.
  */
 Entity.prototype.enqueue = function enqueue () {
-  if ( ! this.replaying) {
-    this.eventsToEmit.push(arguments);
+  if (!this.replaying) {
+    this.eventsToEmit.push(arguments)
   }
-};
+}
 
 /**
  * Digest a command with given data.This is called whenever you want to record
@@ -135,18 +137,18 @@ Entity.prototype.enqueue = function enqueue () {
  * @param  {Object} data    the data that should be passed to the replay.
  */
 Entity.prototype.digest = function digest (method, data) {
-  if( ! this.replaying) {
-    this.timestamp = Date.now();
-    this.version = this.version + 1;
-    log(util.format('digesting event \'%s\' w/ data %j', method, data));
+  if (!this.replaying) {
+    this.timestamp = Date.now()
+    this.version = this.version + 1
+    log(util.format('digesting event \'%s\' w/ data %j', method, data))
     this.newEvents.push({
       method: method,
       data: data,
       timestamp: this.timestamp,
       version: this.version
-    });
+    })
   }
-};
+}
 
 /**
  * Merge a snapshot onto the entity.
@@ -158,14 +160,13 @@ Entity.prototype.digest = function digest (method, data) {
  * @see Entity.prototype.mergeProperty
  */
 Entity.prototype.merge = function merge (snapshot) {
-  log(util.format('merging snapshot %j', snapshot));
+  log(util.format('merging snapshot %j', snapshot))
   for (var property in snapshot) {
-    if (snapshot.hasOwnProperty(property))
-      var val = _.cloneDeep(snapshot[property]);
-      this.mergeProperty(property, val);
+    if (snapshot.hasOwnProperty(property)) { var val = cloneDeep(snapshot[property]) }
+    this.mergeProperty(property, val)
   }
-  return this;
-};
+  return this
+}
 
 /**
  * Merge a property onto the instance.
@@ -183,14 +184,13 @@ Entity.prototype.merge = function merge (snapshot) {
  */
 Entity.prototype.mergeProperty = function mergeProperty (name, value) {
   if (mergeProperties.size &&
-      mergeProperties.has(this.__proto__.constructor.name) &&
-      mergeProperties.get(this.__proto__.constructor.name).has(name) &&
-      typeof mergeProperties.get(this.__proto__.constructor.name).get(name) === 'function') {
-    return mergeProperties.get(this.__proto__.constructor.name).get(name).call(this, value);
-  }
-  else if (typeof value === 'object' && typeof this[name] === 'object') _.merge(this[name], value);
-  else this[name] = value;
-};
+      mergeProperties.has(Object.getPrototypeOf(this).constructor.name) &&
+      mergeProperties.get(Object.getPrototypeOf(this).constructor.name).has(name) &&
+      typeof mergeProperties.get(Object.getPrototypeOf(this).constructor.name).get(name) === 'function') {
+    return mergeProperties.get(Object.getPrototypeOf(this).constructor.name).get(name).call(this, value)
+  } else if (typeof value === 'object' && typeof this[name] === 'object') merge(this[name], value)
+  else this[name] = value
+}
 
 /**
  * Replay an array of events onto the instance.
@@ -207,27 +207,27 @@ Entity.prototype.mergeProperty = function mergeProperty (name, value) {
  * @param  {Array} events  an array of events to be replayed.
  */
 Entity.prototype.replay = function replay (events) {
-  var self = this;
+  var self = this
 
-  this.replaying = true;
+  this.replaying = true
 
-  log(util.format('replaying events %j', events));
+  log(util.format('replaying events %j', events))
 
   events.forEach(function (event) {
     if (self[event.method]) {
-      self[event.method](event.data);
-      self.version = event.version;
+      self[event.method](event.data)
+      self.version = event.version
     } else {
-      var classNameRegex = /function (.{1,})\w?\(/,
-          className = classNameRegex.exec(self.constructor.toString())[1],
-          errorMessage = util.format('method \'%s\' does not exist on model \'%s\'', event.method, className);
-      log(errorMessage);
-      throw new EntityError(errorMessage);
+      const classNameRegex = /function (.{1,})\w?\(/
+      const className = classNameRegex.exec(self.constructor.toString())[1]
+      const errorMessage = util.format('method \'%s\' does not exist on model \'%s\'', event.method, className)
+      log(errorMessage)
+      throw new EntityError(errorMessage)
     }
-  });
+  })
 
-  this.replaying = false;
-};
+  this.replaying = false
+}
 
 /**
  * Create a snapshot of the current state of the entity instance.
@@ -239,10 +239,10 @@ Entity.prototype.replay = function replay (events) {
  * @returns  {Object}
  */
 Entity.prototype.snapshot = function snapshot () {
-  this.snapshotVersion = this.version;
-  var snap = _.cloneDeep(this, true);
-  return this.trimSnapshot(snap);
-};
+  this.snapshotVersion = this.version
+  var snap = cloneDeep(this, true)
+  return this.trimSnapshot(snap)
+}
 
 /**
  * Remove the internal sourced properties from the passed snapshot.
@@ -254,14 +254,14 @@ Entity.prototype.snapshot = function snapshot () {
  * @see Entity.prototype.snapshot
  */
 Entity.prototype.trimSnapshot = function trimSnapshot (snapshot) {
-  delete snapshot.eventsToEmit;
-  delete snapshot.newEvents;
-  delete snapshot.replaying;
-  delete snapshot._events;
-  delete snapshot._maxListeners;
-  delete snapshot.domain;
-  return snapshot;
-};
+  delete snapshot.eventsToEmit
+  delete snapshot.newEvents
+  delete snapshot.replaying
+  delete snapshot._events
+  delete snapshot._maxListeners
+  delete snapshot.domain
+  return snapshot
+}
 
 /**
  * Helper function to automatically create a method that calls digest on the
@@ -291,18 +291,18 @@ Entity.prototype.trimSnapshot = function trimSnapshot (snapshot) {
  *
  */
 Entity.digestMethod = function (type, fn) {
-  if ( ! type) throw new EntityError('type is required for digest method definitions');
-  if ( ! fn) throw new EntityError('a function is required for digest method definitions');
-  if ( ! fn.name) throw new EntityError('Anonmyous functions are not allowed in digest method definitions. Please provide a function name');
+  if (!type) throw new EntityError('type is required for digest method definitions')
+  if (!fn) throw new EntityError('a function is required for digest method definitions')
+  if (!fn.name) throw new EntityError('Anonmyous functions are not allowed in digest method definitions. Please provide a function name')
   type.prototype[fn.name] = function () {
-    var digestArgs = Array.prototype.slice.call(arguments);
-    digestArgs.unshift(fn.name);
-    Entity.prototype.digest.apply(this, digestArgs);
+    var digestArgs = Array.prototype.slice.call(arguments)
+    digestArgs.unshift(fn.name)
+    Entity.prototype.digest.apply(this, digestArgs)
 
-    var methodArgs = Array.prototype.slice.call(arguments);
-    return fn.apply(this, methodArgs);
-  };
-};
+    var methodArgs = Array.prototype.slice.call(arguments)
+    return fn.apply(this, methodArgs)
+  }
+}
 
 /**
  * mergeProperties holds a map of entity types to properties.
@@ -311,7 +311,7 @@ Entity.digestMethod = function (type, fn) {
  * @see Entity.prototype.mergeProperty
  * @static
  */
-var mergeProperties = new Map();
+var mergeProperties = new Map()
 
 /**
  * Convenience function to store references to functions that should be run
@@ -344,8 +344,8 @@ var mergeProperties = new Map();
  *  });
  */
 Entity.mergeProperty = function (type, name, fn) {
-  if ( ! mergeProperties.has(type.name)) mergeProperties.set(type.name, new Map());
-  mergeProperties.get(type.name).set(name, fn);
-};
+  if (!mergeProperties.has(type.name)) mergeProperties.set(type.name, new Map())
+  mergeProperties.get(type.name).set(name, fn)
+}
 
-module.exports = Entity;
+export default Entity

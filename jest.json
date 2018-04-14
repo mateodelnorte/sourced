@@ -1,0 +1,7 @@
+{
+  "testEnvironment": "node",
+  "modulePaths": [
+    "src",
+    "/node_modules/"
+  ]
+}
