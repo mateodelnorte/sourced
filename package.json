@@ -1,12 +1,14 @@
 {
   "name": "sourced",
-  "version": "1.0.0",
+  "version": "0.1.5",
   "description": "Tiny framework for building models with the event sourcing  pattern (events and snapshots).",
   "main": "dist/index.js",
   "scripts": {
     "build": "babel src -d dist",
+    "docs": "mocha -R doc -t 5000 > docs/docs.html",
     "lint": "eslint src __tests__",
     "lint:fix": "eslint --fix src __tests__",
+    "markdown": "mocha -R markdown -t 5000 > docs/docs.md",
     "test": "jest --config jest.json --coverage --verbose",
     "test:watch": "jest --config jest.json --watch --coverage --verbose",
     "precommit": "npm run lint:fix && npm run test",

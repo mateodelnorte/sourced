@@ -1,12 +1,19 @@
+DEBUG=sourced*
+
 test: 
-	-DEBUG= NODE_ENV=development ./node_modules/mocha/bin/mocha -R spec
+	$(MAKE) DEBUG= test-debug
 
 test-debug: 
-	-DEBUG=sourced* NODE_ENV=development ./node_modules/mocha/bin/mocha -R spec
+	DEBUG=$(DEBUG) \
+	npm test
 
 test-docs:
-	-DEBUG=sourced* NODE_ENV=development ./node_modules/.bin/mocha -R doc -t 5000 > docs/docs.html
+	DEBUG=sourced* \
+	npm run docs
 
 test-markdown:
-	-DEBUG=sourced* NODE_ENV=development ./node_modules/.bin/mocha -R markdown -t 5000 > docs/docs.md
+	DEBUG=sourced* \
+	NODE_ENV=development \
+	npm run markdown
+
 .PHONY: test
