@@ -47,7 +47,7 @@ class Entity extends EventEmitter {
   constructor (initialState = {}, {
     snapshot,
     events
-  }) {
+  } = {}) {
     super()
 
     Object.assign(this, initialState)
