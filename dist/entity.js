@@ -119,7 +119,7 @@ class Entity extends EventEmitter {
     }
 
     /**
-     * If events are also provided, merge them as well
+     * If events are also provided, replay them
      */
     if (events) {
       this.replay(events);
@@ -307,10 +307,10 @@ class Entity extends EventEmitter {
    *    });
    *
    */
-  static digestMethod(type, fn, name) {
+  static digestMethod(type, fn) {
     if (!type) throw new EntityError('type is required for digest method definitions');
     if (!fn) throw new EntityError('a function is required for digest method definitions');
-    if (!(fn.name && name)) throw new EntityError('Anonmyous functions are not allowed in digest method definitions. Please provide a function name');
+    if (!fn.name) throw new EntityError('Anonmyous functions are not allowed in digest method definitions. Please provide a function name');
     type.prototype[fn.name] = function () {
       const digestArgs = Array.prototype.slice.call(arguments);
       digestArgs.unshift(fn.name);
