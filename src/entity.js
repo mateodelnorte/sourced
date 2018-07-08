@@ -7,6 +7,7 @@ import merge from 'lodash.merge'
 import util from 'util'
 
 const log = debug('sourced')
+const { EventEmitter } = events
 
 /**
  * Extending native Error.
@@ -42,9 +43,15 @@ const mergeProperties = new Map()
  * @requires lodash
  * @license MIT
  */
-class Entity extends events.EventEmitter {
-  constructor () {
+class Entity extends EventEmitter {
+  constructor (initialState = {}, {
+    snapshot,
+    events
+  } = {}) {
     super()
+
+    Object.assign(this, initialState)
+
     /**
      * [Description]
      * @member {Array} eventsToEmit
@@ -82,27 +89,19 @@ class Entity extends events.EventEmitter {
      * @member {Number} version
      */
     this.version = 0
-    var args = Array.prototype.slice.call(arguments)
 
     /**
-     * If one argument is passed, asume it's a snapshot and merge it.
-     *
-     * @todo This should probably be changed. What if it's not a snapshot/object?
+     * If a snapshot is provided, merge it.
      */
-    if (args[0]) {
-      var snapshot = args[0]
+    if (snapshot) {
       this.merge(snapshot)
     }
 
     /**
-     * If two arguments are passed, asume the second is an array of events and
-     * replay them.
-     *
-     * @todo This should probably be changed. What if it's not an array?
+     * If events are also provided, replay them
      */
-    if (args[1]) {
-      var evnts = args[1]
-      this.replay(evnts)
+    if (events) {
+      this.replay(events)
     }
   }
 
