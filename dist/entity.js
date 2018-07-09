@@ -65,13 +65,8 @@ const mergeProperties = new Map();
  * @license MIT
  */
 class Entity extends EventEmitter {
-  constructor(initialState = {}, {
-    snapshot,
-    events
-  }) {
+  constructor() {
     super();
-
-    Object.assign(this, initialState);
 
     /**
      * [Description]
@@ -110,10 +105,16 @@ class Entity extends EventEmitter {
      * @member {Number} version
      */
     this.version = 0;
+  }
 
+  /**
+   * Rehydrates by merging a snapshot, and replaying events on top.
+   */
+  rehydrate(snapshot, events) {
+    log('rehydrating', this);
     /**
-     * If a snapshot is provided, merge it.
-     */
+    * If a snapshot is provided, merge it.
+    */
     if (snapshot) {
       this.merge(snapshot);
     }
