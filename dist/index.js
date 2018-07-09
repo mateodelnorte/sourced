@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Value = exports.EntityProxy = exports.Entity = undefined;
+exports.Value = exports.Entity = exports.SourcedValue = exports.SourcedEntity = undefined;
 
 var _entity = require('./entity');
 
@@ -19,6 +19,9 @@ var _value2 = _interopRequireDefault(_value);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-exports.Entity = _entity2.default;
-exports.EntityProxy = _entityProxy2.default;
+const SourcedValue = _value2.default;
+
+exports.SourcedEntity = _entity2.default;
+exports.SourcedValue = SourcedValue;
+exports.Entity = _entityProxy2.default;
 exports.Value = _value2.default;

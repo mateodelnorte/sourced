@@ -64,7 +64,7 @@ const mergeProperties = new Map();
  * @requires lodash
  * @license MIT
  */
-class Entity extends EventEmitter {
+class SourcedEntity extends EventEmitter {
   constructor() {
     super();
 
@@ -358,4 +358,4 @@ class Entity extends EventEmitter {
   }
 }
 
-exports.default = Entity;
+exports.default = SourcedEntity;
