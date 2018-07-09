@@ -12,15 +12,6 @@ const proxyConstructor = {
   }
 };
 
-// {
-//   // target = Entity
-//   apply (target, thisArg, argumentsList) {
-//     log('applying through proxy')
-//     log({target, thisArg, argumentsList})
-//     return new target(...argumentsList);
-//   }
-// }
-
 const EntityProxy = new Proxy(Entity, proxyConstructor);
 
 export default EntityProxy
