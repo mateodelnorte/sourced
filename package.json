@@ -1,6 +1,6 @@
 {
   "name": "sourced",
-  "version": "0.1.5",
+  "version": "2.0.0",
   "description": "Tiny framework for building models with the event sourcing  pattern (events and snapshots).",
   "main": "dist/index.js",
   "scripts": {
