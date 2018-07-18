@@ -64,3 +64,4 @@ typings/
 dist
 jest_0
 .queues
+coverage

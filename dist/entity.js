@@ -26,7 +26,9 @@ var _util2 = _interopRequireDefault(_util);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-const log = (0, _debug2.default)('sourced');
+const log = (0, _debug2.default)('sourced'); /* jslint node: true */
+
+const { EventEmitter } = _events2.default;
 
 /**
  * Extending native Error.
@@ -34,8 +36,6 @@ const log = (0, _debug2.default)('sourced');
  * @class {Function} EntityError
  * @param {String} msg The error message.
  */
-/* jslint node: true */
-
 class EntityError extends Error {
   constructor(...args) {
     super(...args);
@@ -64,9 +64,10 @@ const mergeProperties = new Map();
  * @requires lodash
  * @license MIT
  */
-class Entity extends _events2.default.EventEmitter {
+class SourcedEntity extends EventEmitter {
   constructor() {
     super();
+
     /**
      * [Description]
      * @member {Array} eventsToEmit
@@ -104,27 +105,25 @@ class Entity extends _events2.default.EventEmitter {
      * @member {Number} version
      */
     this.version = 0;
-    var args = Array.prototype.slice.call(arguments);
+  }
 
+  /**
+   * Rehydrates by merging a snapshot, and replaying events on top.
+   */
+  rehydrate(snapshot, events) {
+    log('rehydrating', this);
     /**
-     * If one argument is passed, asume it's a snapshot and merge it.
-     *
-     * @todo This should probably be changed. What if it's not a snapshot/object?
-     */
-    if (args[0]) {
-      var snapshot = args[0];
+    * If a snapshot is provided, merge it.
+    */
+    if (snapshot) {
       this.merge(snapshot);
     }
 
     /**
-     * If two arguments are passed, asume the second is an array of events and
-     * replay them.
-     *
-     * @todo This should probably be changed. What if it's not an array?
+     * If events are also provided, replay them
      */
-    if (args[1]) {
-      var evnts = args[1];
-      this.replay(evnts);
+    if (events) {
+      this.replay(events);
     }
   }
 
@@ -359,4 +358,4 @@ class Entity extends _events2.default.EventEmitter {
   }
 }
 
-exports.default = Entity;
+exports.default = SourcedEntity;
