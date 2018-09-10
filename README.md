@@ -10,7 +10,7 @@ latest snapshot plus subsequent events, and replaying them against the entity.
 
 One large benefit of event sourcing: your data *_is_* your audit trail. Zero discrepancies. 
 
-For example usage, see the [examples](./examples) and [tests](./test). 
+For example usage, see the [examples](./examples) and [tests](./__tests__). 
 
 Sourced makes no assumptions about how you _store_ your events and snapshots. The library is small and tight with only the required functionality to define entities and their logic, enqueue and emit events, and track event state to later be persisted. To actually persist, use one of the following libraries or implement your own: 
 
@@ -213,7 +213,7 @@ Entity.digestMethod(Car, function clearSettings (param) {
 
 ### Entity.mergeProperty(type, name, fn)
 Convenience function to store references to functions that should be run
-when mergin a particular property.
+when merging a particular property.
 
 **Kind**: static method of <code>[Entity](#Entity)</code>
 **See**: mergeProperties
