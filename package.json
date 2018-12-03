@@ -1,6 +1,6 @@
 {
   "name": "sourced",
-  "version": "2.0.0",
+  "version": "0.0.0-development",
   "description": "Tiny framework for building models with the event sourcing  pattern (events and snapshots).",
   "main": "dist/index.js",
   "scripts": {
@@ -12,14 +12,20 @@
     "test": "jest --config jest.json --coverage --verbose",
     "test:watch": "jest --config jest.json --watch --coverage --verbose",
     "precommit": "npm run lint:fix && npm run test",
-    "prepublish": "npm run build"
+    "prepublish": "npm run build",
+    "semantic-release": "semantic-release",
+    "travis-deploy-once": "travis-deploy-once"
   },
   "author": {
     "name": "mattwalters5@gmail.com"
   },
+  "contributors": [
+    "mattwalters5@gmail.com",
+    "pat@patscott.io"
+  ],
   "repository": {
     "type": "git",
-    "url": "git@github.com:mateodelnorte/sourced.git"
+    "url": "http://github.com:mateodelnorte/sourced.git"
   },
   "license": "MIT",
   "devDependencies": {
@@ -37,7 +43,9 @@
     "eslint-plugin-promise": "^3.7.0",
     "eslint-plugin-standard": "^3.0.1",
     "jest": "^22.4.3",
-    "regenerator-runtime": "^0.11.1"
+    "regenerator-runtime": "^0.11.1",
+    "semantic-release": "^15.12.3",
+    "travis-deploy-once": "^5.0.9"
   },
   "dependencies": {
     "debug": "^3.1.0",
