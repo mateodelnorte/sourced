@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/mateodelnorte/sourced.svg?branch=master)](https://travis-ci.org/mateodelnorte/sourced)
+[![Build Status](https://travis-ci.org/mateodelnorte/sourced.svg?branch=master)](https://travis-ci.org/mateodelnorte/sourced) [![Greenkeeper badge](https://badges.greenkeeper.io/mateodelnorte/sourced.svg)](https://greenkeeper.io/)
 
 sourced
 =======
