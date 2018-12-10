@@ -17,6 +17,39 @@ Sourced makes no assumptions about how you _store_ your events and snapshots. Th
 - [sourced-repo-mongo](https://github.com/mateodelnorte/sourced-repo-mongo)
 - ~~[sourced-repo-couchdb](https://github.com/dermidgen/sourced-repo-couchdb)~~ (partially implemented)
 
+# ES6 Example 
+
+```javascript
+const Entity = require('sourced').SourcedEntity;
+
+class Market extends Entity {
+  constructor(snapshot, events) {
+    super()
+    this.orders = [];
+    this.price = 0;
+
+    this.rehydrate(snapshot, events)
+  }
+
+  init(param) {
+    this.id = param.id;
+    this.digest('init', param);
+    this.emit('initialized', param, this);
+  }
+
+  createOrder(param) {
+    this.orders.push(param);
+    var total = 0;
+    this.orders.forEach(function (order) {
+      total += order.price;
+    });
+    this.price = total / this.orders.length;
+    this.digest('createOrder', param);
+    this.emit('done', param, this);
+  };
+}
+```
+
 # Reference
 
 ## Classes
