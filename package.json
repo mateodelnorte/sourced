@@ -32,7 +32,7 @@
     "babel-cli": "6.26.0",
     "babel-core": "6.26.3",
     "babel-eslint": "10.0.1",
-    "babel-jest": "22.4.4",
+    "babel-jest": "23.6.0",
     "babel-plugin-module-resolver": "3.1.1",
     "babel-plugin-transform-object-rest-spread": "6.26.0",
     "babel-preset-env": "1.7.0",
@@ -42,7 +42,7 @@
     "eslint-plugin-node": "8.0.0",
     "eslint-plugin-promise": "4.0.1",
     "eslint-plugin-standard": "4.0.0",
-    "jest": "22.4.4",
+    "jest": "23.6.0",
     "regenerator-runtime": "0.13.1",
     "semantic-release": "15.13.1",
     "travis-deploy-once": "5.0.11"
