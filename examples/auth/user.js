@@ -1,4 +1,4 @@
-var Entity = require('../../lib/entity'),
+var Entity = require('../../dist/index').Entity,
     events = require('events'),
     util = require('util');
 

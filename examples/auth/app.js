@@ -1,4 +1,4 @@
-var Value = require('../../lib/value');
+var Value = require('../../dist/index').Value;
 
 module.exports.create = function (app) {
   return Value(app);
