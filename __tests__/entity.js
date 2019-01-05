@@ -1,13 +1,14 @@
 import Entity from '../src/entity'
 
 class TestEntity extends Entity {
-  constructor () {
+  constructor (snapshot, events) {
     super()
     this.property = false
     this.property2 = {
       subProperty: false,
       subProperty2: true
     }
+    this.rehydrate(snapshot, events)
   }
   method (param) {
     this.property2 = param.data
@@ -17,6 +18,29 @@ class TestEntity extends Entity {
 }
 
 describe('entity', function () {
+  describe('#constructor', function () {
+    it('should accept variations of snapshots and events to use for rehydrating', () => {
+      const snapshot = {
+        property: true
+      }
+      let data = { hello: 'sourced' }
+      const entity1 = new TestEntity(snapshot)
+      expect(entity1.property).toBe(true)
+      entity1.method({ data })
+
+      expect(entity1.property2).toEqual(data)
+
+      console.warn(entity1)
+
+      const entity2 = new TestEntity(snapshot, entity1.newEvents)
+      expect(entity2.property).toEqual(entity1.property)
+      expect(entity2.property2).toEqual(entity1.property2)
+
+      const entity3 = new TestEntity(null, entity1.newEvents)
+      expect(entity3.property).toBe(false)
+      expect(entity3.property2).toEqual(entity1.property2)
+    })
+  })
   describe('#digest', function () {
     it('should wrap param object with method matching calling method name and add to array of newEvents', function () {
       const test = new TestEntity()
