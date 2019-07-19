@@ -41,7 +41,7 @@
     "eslint-plugin-promise": "4.1.1",
     "eslint-plugin-standard": "4.0.0",
     "jest": "24.8.0",
-    "regenerator-runtime": "0.13.2"
+    "regenerator-runtime": "0.13.3"
   },
   "dependencies": {
     "debug": "^3.1.0",
