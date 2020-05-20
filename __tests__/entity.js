@@ -30,7 +30,7 @@ describe('entity', function () {
 
       expect(entity1.property2).toEqual(data)
 
-      console.warn(entity1)
+      // console.warn(entity1)
 
       const entity2 = new TestEntity(snapshot, entity1.newEvents)
       expect(entity2.property).toEqual(entity1.property)

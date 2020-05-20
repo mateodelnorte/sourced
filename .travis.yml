@@ -1,15 +1,12 @@
 language: node_js
 node_js:
-  - '8'
-  - '10'
   - '12'
+  - '14'
 cache: npm
 notifications:
   email: false
-before_install:
+after_success:
   - npm install -g codecov
-script:
-  - npm run test
   - codecov
 branches:
   except:
@@ -20,5 +17,5 @@ jobs:
       if: branch == master && !fork
       node_js: node # pre-installed version
       script:
-        - npm install -g semantic-release@^15
+        - npm install -g semantic-release
         - semantic-release

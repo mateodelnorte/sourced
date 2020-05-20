@@ -27,25 +27,24 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "babel-cli": "6.26.0",
-    "babel-core": "6.26.3",
+    "@babel/core": "^7.9.6",
+    "@babel/preset-env": "^7.9.6",
     "babel-eslint": "10.1.0",
-    "babel-jest": "25.5.1",
-    "babel-plugin-module-resolver": "3.2.0",
-    "babel-plugin-transform-object-rest-spread": "6.26.0",
-    "babel-preset-env": "1.7.0",
-    "eslint": "6.8.0",
-    "eslint-config-standard": "13.0.1",
+    "babel-jest": "26.0.1",
+    "babel-plugin-module-resolver": "^4.0.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "eslint": "7.0.0",
+    "eslint-config-standard": "14.1.1",
     "eslint-plugin-import": "2.20.2",
-    "eslint-plugin-node": "9.2.0",
+    "eslint-plugin-node": "11.1.0",
     "eslint-plugin-promise": "4.2.1",
     "eslint-plugin-standard": "4.0.1",
-    "jest": "25.5.4",
+    "jest": "26.0.1",
     "regenerator-runtime": "0.13.5"
   },
   "dependencies": {
-    "debug": "^3.1.0",
+    "debug": "^4.1.1",
     "lodash.clonedeep": "^4.5.0",
-    "lodash.merge": "^4.6.1"
+    "lodash.merge": "^4.6.2"
   }
 }
