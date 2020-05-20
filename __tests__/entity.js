@@ -10,6 +10,7 @@ class TestEntity extends Entity {
     }
     this.rehydrate(snapshot, events)
   }
+
   method (param) {
     this.property2 = param.data
     this.digest('method', param)
@@ -23,7 +24,7 @@ describe('entity', function () {
       const snapshot = {
         property: true
       }
-      let data = { hello: 'sourced' }
+      const data = { hello: 'sourced' }
       const entity1 = new TestEntity(snapshot)
       expect(entity1.property).toBe(true)
       entity1.method({ data })

@@ -2,33 +2,33 @@ import Entity from '../src/entityProxy'
 import util from 'util'
 
 function User () {
-  this.apps = {};
-  this.username = '';
-  this.password = this.pass = '';
+  this.apps = {}
+  this.username = ''
+  this.password = this.pass = ''
 
-  Entity.apply(this, arguments);
+  Entity.apply(this, arguments)
 }
 
-util.inherits(User, Entity);
+util.inherits(User, Entity)
 
 User.prototype.grant = function (param) {
-  this.apps[param.appId] = param;
-  this.digest('grant', param);
-  this.emit('granted', param, this);
-};
+  this.apps[param.appId] = param
+  this.digest('grant', param)
+  this.emit('granted', param, this)
+}
 
 function Inventory () {
   this.products = []
 
-  Entity.apply(this, arguments);
+  Entity.apply(this, arguments)
 }
 
-util.inherits(Inventory, Entity);
+util.inherits(Inventory, Entity)
 
 describe('entityProxy', () => {
   it('allows users to use prototypical inheritance with new ES6 class', () => {
-    let user = new User()
-    let inventory = new Inventory()
+    const user = new User()
+    const inventory = new Inventory()
 
     expect(user.apps).toEqual({})
     expect(user.username).toEqual('')
@@ -36,5 +36,7 @@ describe('entityProxy', () => {
     expect(user.on).toBeDefined()
     expect(user.digest).toBeDefined()
     expect(user.grant).toBeDefined()
+
+    expect(inventory.on).toBeDefined()
   })
 })
