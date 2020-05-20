@@ -6,14 +6,14 @@ const log = debug('sourced')
 let hasWarned = false
 
 const proxyConstructor = {
-  apply : ( target, thisArg, args ) => {
-    if (! hasWarned) warnUser()
-    log( `Initializing ${ target.name } with:`, args );
-    let entity = new target();
+  apply: (Target, thisArg, args) => {
+    if (!hasWarned) warnUser()
+    log(`Initializing ${Target.name} with:`, args)
+    const entity = new Target()
     Object.assign(thisArg, entity)
     thisArg.rehydrate(...args)
   }
-};
+}
 
 const warnUser = () => {
   console.warn(`DEPRECATION WARNING:
@@ -39,6 +39,6 @@ The key difference is calling "rehydrate" at the end of your constructor.
   hasWarned = true
 }
 
-const Entity = new Proxy(SourcedEntity, proxyConstructor);
+const Entity = new Proxy(SourcedEntity, proxyConstructor)
 
 export default Entity

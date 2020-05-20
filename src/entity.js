@@ -91,7 +91,7 @@ class SourcedEntity extends EventEmitter {
    */
   rehydrate (snapshot, events) {
     log('rehydrating', this)
-     /**
+    /**
      * If a snapshot is provided, merge it.
      */
     if (snapshot) {
@@ -160,7 +160,7 @@ class SourcedEntity extends EventEmitter {
   merge (snapshot) {
     log(util.format('merging snapshot %j', snapshot))
     for (var property in snapshot) {
-      if (snapshot.hasOwnProperty(property)) { var val = cloneDeep(snapshot[property]) }
+      if (snapshot[property]) { var val = cloneDeep(snapshot[property]) }
       this.mergeProperty(property, val)
     }
     return this
@@ -296,7 +296,7 @@ class SourcedEntity extends EventEmitter {
     type.prototype[fn.name] = function () {
       const digestArgs = Array.prototype.slice.call(arguments)
       digestArgs.unshift(fn.name)
-      Entity.prototype.digest.apply(this, digestArgs)
+      SourcedEntity.prototype.digest.apply(this, digestArgs)
 
       const methodArgs = Array.prototype.slice.call(arguments)
       return fn.apply(this, methodArgs)

@@ -1,6 +1,6 @@
 {
   "presets": [
-    ["env", {
+    ["@babel/preset-env", {
       "targets": {
         "node": "current"
       }
@@ -10,6 +10,6 @@
     ["module-resolver", {
       "root": ["./src"]
     }],
-    ["transform-object-rest-spread"]
+    ["@babel/plugin-proposal-object-rest-spread"]
   ]
 }
