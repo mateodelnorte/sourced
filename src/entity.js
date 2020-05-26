@@ -160,7 +160,7 @@ class SourcedEntity extends EventEmitter {
   merge (snapshot) {
     log(util.format('merging snapshot %j', snapshot))
     for (var property in snapshot) {
-      if (snapshot[property]) { var val = cloneDeep(snapshot[property]) }
+      if (snapshot.hasOwnProperty(property)) { var val = cloneDeep(snapshot[property]) } // eslint-disable-line no-prototype-builtins
       this.mergeProperty(property, val)
     }
     return this
