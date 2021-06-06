@@ -34,7 +34,7 @@
     "babel-eslint": "10.1.0",
     "babel-jest": "26.0.1",
     "babel-plugin-module-resolver": "4.0.0",
-    "eslint": "7.3.0",
+    "eslint": "7.28.0",
     "eslint-config-standard": "14.1.1",
     "eslint-plugin-import": "2.21.2",
     "eslint-plugin-node": "11.1.0",
