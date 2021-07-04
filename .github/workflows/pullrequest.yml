@@ -27,4 +27,5 @@ jobs:
     - run: npm ci
     - run: npm run lint
     - run: npm test
+    - run: npx codecov
     - run: npm run build --if-present
