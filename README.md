@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/mateodelnorte/sourced.svg?branch=master)](https://travis-ci.org/mateodelnorte/sourced)
 
+REPO (TEMPORARILY?) MOVED: Currently being maintained at https://github.com/cloudnativeentrepreneur/sourced - publishing to same npm package!
+
 sourced
 =======
 
